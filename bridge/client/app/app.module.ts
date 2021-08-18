@@ -113,6 +113,7 @@ import { EventService } from './_services/event.service';
 import { ToType } from './_pipes/to-type';
 import { ToDatePipe } from './_pipes/to-date.pipe';
 import { KtbConfirmationDialogComponent } from './_components/_dialogs/ktb-confirmation-dialog/ktb-confirmation-dialog.component';
+import { KtbSequenceControlsComponent } from './_components/ktb-sequence-controls/ktb-sequence-controls.component';
 
 registerLocaleData(localeEn, 'en');
 
@@ -185,6 +186,7 @@ export const INITIAL_DELAY_MILLIS = new InjectionToken<number>('Initial delay in
     KtbDangerZoneComponent,
     KtbDeletionDialogComponent,
     KtbConfirmationDialogComponent,
+    KtbSequenceControlsComponent,
     ToType,
     ToDatePipe,
   ],

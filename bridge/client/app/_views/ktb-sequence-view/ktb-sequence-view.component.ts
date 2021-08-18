@@ -21,9 +21,6 @@ import { Project } from '../../_models/project';
 import { DataService } from '../../_services/data.service';
 import { DateUtil } from '../../_utils/date.utils';
 import { Sequence } from '../../_models/sequence';
-import { SequenceStateControl } from '../../../../shared/models/sequence';
-import { KtbConfirmationDialogComponent } from '../../_components/_dialogs/ktb-confirmation-dialog/ktb-confirmation-dialog.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'ktb-sequence-view',
@@ -89,10 +86,8 @@ export class KtbSequenceViewComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:no-any
   public _seqFilters: any[] = [];
 
-  public confirmationDialogRef?: MatDialogRef<KtbConfirmationDialogComponent>;
-
   constructor(private _changeDetectorRef: ChangeDetectorRef, private dataService: DataService, private route: ActivatedRoute,
-              public dateUtil: DateUtil, private router: Router, private location: Location, public dialog: MatDialog) {
+              public dateUtil: DateUtil, private router: Router, private location: Location) {
     const projectName$ = this.route.params
       .pipe(
         map(params => params.projectName)
@@ -297,30 +292,6 @@ export class KtbSequenceViewComponent implements OnInit, OnDestroy {
       this.selectedStage = stageName;
       this._changeDetectorRef.markForCheck();
     }
-  }
-
-  triggerResumeSequence(sequence: Sequence): void {
-    this.dataService.sendSequenceControl(sequence, SequenceStateControl.RESUME);
-  }
-
-  triggerPauseSequence(sequence: Sequence): void {
-    this.dataService.sendSequenceControl(sequence, SequenceStateControl.PAUSE);
-  }
-
-  triggerAbortSequence(sequence: Sequence): void {
-    const data = {
-      sequence,
-      confirmCallback: (params: any) => {
-        this.abortSequence(params.sequence);
-      }
-    };
-    this.confirmationDialogRef = this.dialog.open(KtbConfirmationDialogComponent, {
-      data,
-    });
-  }
-
-  abortSequence(sequence: Sequence): void {
-    this.dataService.sendSequenceControl(sequence, SequenceStateControl.ABORT);
   }
 
   ngOnDestroy(): void {
